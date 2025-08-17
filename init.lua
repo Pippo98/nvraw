@@ -1,0 +1,127 @@
+vim.opt.number = true
+vim.opt.winborder = "rounded"
+vim.opt.swapfile = false
+vim.opt.wrap = false
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.relativenumber = true
+vim.opt.signcolumn = "yes"
+vim.opt.path = "**"
+vim.opt.mouse = ""
+vim.g.mapleader = " "
+
+-- lsp
+vim.opt.completeopt = { "menuone", "noselect", "popup" } 
+vim.keymap.set("i", "<C-space>", vim.lsp.completion.get, { desc = "trigger autocompletion" })
+
+vim.keymap.set({"n", "v"}, "j", "gj")
+vim.keymap.set({"n", "v"}, "k", "gk")
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")
+vim.keymap.set("i", "<C-h>", "<Left>")
+vim.keymap.set("i", "<C-l>", "<Right>")
+vim.keymap.set("n", "<leader>td", ":edit ~/.global-todo-list.md<CR>")
+
+vim.keymap.set("n", "<leader>o", ":write<CR> :source<CR>")
+vim.keymap.set("n", "<leader>w", ":write<CR>")
+vim.keymap.set("n", "<leader>q", ":quit<CR>")
+
+--- Buffers
+vim.keymap.set("n", "<leader>d", ":bp|bd#<CR>")
+
+vim.pack.add({
+  { src = "https://github.com/vague2k/vague.nvim" },
+  { src = "https://github.com/echasnovski/mini.pick" },
+  { src = "https://github.com/akinsho/bufferline.nvim" },
+  { src = "https://github.com/Saghen/blink.cmp" },
+	-- neo-tree
+	{ src = "https://github.com/nvim-neo-tree/neo-tree.nvim" },
+  -- dependencies
+  { src = "https://github.com/nvim-lua/plenary.nvim" },
+  { src = "https://github.com/MunifTanjim/nui.nvim" },
+  { src = "https://github.com/nvim-tree/nvim-web-devicons" },
+	-- cop
+	{ src = "https://github.com/zbirenbaum/copilot.lua" },
+
+	{ src = "https://github.com/ellisonleao/gruvbox.nvim" },
+	{ src = "https://github.com/folke/tokyonight.nvim" },
+	{ src = "https://github.com/catppuccin/nvim" },
+	{ src = "https://github.com/navarasu/onedark.nvim" },
+	{ src = "https://github.com/sainnhe/gruvbox-material" },
+	{ src = "https://github.com/sainnhe/everforest" },
+	{ src = "https://github.com/marko-cerovac/material.nvim" },
+	{ src = "https://github.com/olimorris/onedarkpro.nvim" },
+	{ src = "https://github.com/Mofiqul/dracula.nvim" },
+	{ src = "https://github.com/shaunsingh/nord.nvim" },
+	{ src = "https://github.com/blazkowolf/gruber-darker.nvim" },
+})
+
+vim.keymap.set("n", "<leader>pf", ":Pick files<CR>")
+vim.keymap.set("n", "<leader>ph", ":Pick help<CR>")
+vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR> ")
+vim.keymap.set("n", "<leader>fm", vim.lsp.buf.format)
+
+require "neo-tree".setup()
+require "vague".setup({ transparent = true })
+require "gruvbox".setup()
+require "bufferline".setup()
+require "mini.pick".setup()
+require "blink.cmp".setup({
+	completion = {
+		menu = {
+			auto_show = true
+		},
+		list = {
+			selection = {
+				preselect = false,
+				auto_insert = true
+			}
+		}
+	},
+	keymap = {
+		['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+		['<C-e>'] = { 'hide' },
+		['<CR>'] = { 'accept', 'fallback' },
+
+		['<Tab>'] = { 'select_next', 'fallback' },
+		['<S-Tab>'] = { 'select_prev', 'fallback' },
+		['<Left>'] = { 'snippet_forward', 'fallback' },
+
+		['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+		['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+
+		['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
+	}
+})
+require "copilot".setup({
+	suggestion = {
+		enabled = true,
+		auto_trigger = true,
+		hide_during_completion = vim.g.ai_cmp,
+		keymap = {
+			next = "<M-]>",
+			prev = "<M-[>",
+			accept = "<M-l>",
+			accept_word = "<M-,>",
+			dismiss = "<C-]>",
+		},
+	},
+	panel = { enabled = false },
+	filetypes = {
+		markdown = true,
+		tex = true,
+		help = true,
+	},
+})
+
+
+vim.lsp.enable({ "lua_ls", "clangd", "markdown_oxide" })
+-- theme
+vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[colorscheme gruber-darker]])
+vim.cmd([[colorscheme vaporwave]])
+-- vim.cmd([[hi statusline guibg=NONE]])
+
+
