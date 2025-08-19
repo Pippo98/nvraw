@@ -15,6 +15,8 @@ vim.g.mapleader = " "
 -- lsp
 vim.opt.completeopt = { "menuone", "noselect", "popup" } 
 vim.keymap.set("i", "<C-space>", vim.lsp.completion.get, { desc = "trigger autocompletion" })
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
+vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "go to declaration" })
 
 vim.keymap.set({"n", "v"}, "j", "gj")
 vim.keymap.set({"n", "v"}, "k", "gk")
