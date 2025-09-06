@@ -7,6 +7,7 @@ vim.opt.shiftwidth = 2
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.relativenumber = true
+vim.opt.cursorline = true
 vim.opt.signcolumn = "yes"
 vim.opt.path = "**"
 vim.opt.mouse = ""
@@ -125,5 +126,31 @@ vim.cmd([[colorscheme gruvbox]])
 vim.cmd([[colorscheme gruber-darker]])
 vim.cmd([[colorscheme vaporwave]])
 -- vim.cmd([[hi statusline guibg=NONE]])
+
+
+-- Get the list of available color schemes, then 
+-- define a keymap (leader + cs) to set the next color scheme in the list
+-- and loop back to the start when reaching the end of the list. 
+-- The list should be get from the vim.g.colors_name variable.
+local themes = vim.fn.getcompletion("", "color")
+local current_theme_index = 1
+vim.keymap.set("n", "<leader>cs", function()
+	current_theme_index = current_theme_index + 1
+	if current_theme_index > #themes then
+		current_theme_index = 1
+	end
+	vim.cmd("colorscheme " .. themes[current_theme_index])
+	-- print the name of the current color scheme
+	print("Color scheme: " .. themes[current_theme_index])
+end, { desc = "Cycle color schemes" })
+-- use leader + cS to go backwards
+vim.keymap.set("n", "<leader>cS", function()
+	current_theme_index = current_theme_index - 1
+	if current_theme_index < 1 then
+		current_theme_index = #themes
+	end
+	vim.cmd("colorscheme " .. themes[current_theme_index])
+	print("Color scheme: " .. themes[current_theme_index])
+end, { desc = "Cycle color schemes backwards" })
 
 
