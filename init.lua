@@ -1,7 +1,7 @@
 vim.opt.number = true
 vim.opt.winborder = "rounded"
 vim.opt.swapfile = false
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.autoindent = true
@@ -37,22 +37,32 @@ vim.keymap.set("n", "<leader>d", ":bp|bd#<CR>")
 vim.pack.add({
   { src = "https://github.com/vague2k/vague.nvim" },
   { src = "https://github.com/echasnovski/mini.pick" },
-  { src = "https://github.com/akinsho/bufferline.nvim" },
   { src = "https://github.com/Saghen/blink.cmp" },
+	{ src = "https://github.com/mason-org/mason.nvim" },
+	-- bufferline
+  { src = "https://github.com/akinsho/bufferline.nvim" },
+	{ src = "https://github.com/tiagovla/scope.nvim" },
 	-- neo-tree
 	{ src = "https://github.com/nvim-neo-tree/neo-tree.nvim" },
   -- dependencies
   { src = "https://github.com/nvim-lua/plenary.nvim" },
   { src = "https://github.com/MunifTanjim/nui.nvim" },
   { src = "https://github.com/nvim-tree/nvim-web-devicons" },
-	-- cop
+	-- copilot
 	{ src = "https://github.com/zbirenbaum/copilot.lua" },
-
+	-- themes
 	{ src = "https://github.com/ellisonleao/gruvbox.nvim" },
 	{ src = "https://github.com/folke/tokyonight.nvim" },
 	{ src = "https://github.com/catppuccin/nvim" },
-	{ src = "https://github.com/navarasu/onedark.nvim" },
+	-- { src = "https://github.com/navarasu/onedark.nvim" },
+	{ src = "https://github.com/olimorris/onedarkpro.nvim" },
+	{ src = "https://github.com/Mofiqul/vscode.nvim" },
+	{ src = "https://github.com/EdenEast/nightfox.nvim" },
 	{ src = "https://github.com/sainnhe/gruvbox-material" },
+	{ src = "https://github.com/projekt0n/github-nvim-theme" },
+	{ src = "https://github.com/nyoom-engineering/oxocarbon.nvim" },
+	{ src = "https://github.com/zootedb0t/citruszest.nvim" },
+	{ src = "https://github.com/Mofiqul/adwaita.nvim" },
 	{ src = "https://github.com/sainnhe/everforest" },
 	{ src = "https://github.com/marko-cerovac/material.nvim" },
 	{ src = "https://github.com/olimorris/onedarkpro.nvim" },
@@ -70,7 +80,9 @@ require "neo-tree".setup()
 require "vague".setup({ transparent = true })
 require "gruvbox".setup()
 require "bufferline".setup()
+require("scope").setup({})
 require "mini.pick".setup()
+require "mason".setup()
 require "blink.cmp".setup({
 	completion = {
 		menu = {
@@ -120,8 +132,13 @@ require "copilot".setup({
 })
 
 
-vim.lsp.enable({ "lua_ls", "clangd", "markdown_oxide" })
+vim.lsp.enable({ "lua_ls", "clangd", "markdown_oxide", "matlab_ls", "ltex_plus" })
 -- theme
+require("onedarkpro").setup({
+	plugins = {
+		all = false
+	}
+})
 vim.cmd([[colorscheme gruvbox]])
 vim.cmd([[colorscheme gruber-darker]])
 vim.cmd([[colorscheme vaporwave]])
