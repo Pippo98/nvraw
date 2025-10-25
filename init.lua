@@ -7,11 +7,18 @@ vim.opt.shiftwidth = 2
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.relativenumber = true
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 vim.opt.signcolumn = "yes"
 vim.opt.path = "**"
 vim.opt.mouse = ""
 vim.g.mapleader = " "
+-- smartcase 
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+-- default: :setlocal spell spelllang=en_us
+vim.opt.spell = true
+vim.opt.spelllang = "en"
 
 -- lsp
 vim.opt.completeopt = { "menuone", "noselect", "popup" } 
@@ -30,6 +37,8 @@ vim.keymap.set("n", "<leader>td", ":edit ~/.global-todo-list.md<CR>")
 vim.keymap.set("n", "<leader>o", ":write<CR> :source<CR>")
 vim.keymap.set("n", "<leader>w", ":write<CR>")
 vim.keymap.set("n", "<leader>q", ":quit<CR>")
+
+vim.keymap.set("n", "zs", "zt<C-y>")
 
 --- Buffers
 vim.keymap.set("n", "<leader>d", ":bp|bd#<CR>")
@@ -54,7 +63,7 @@ vim.pack.add({
 	{ src = "https://github.com/ellisonleao/gruvbox.nvim" },
 	{ src = "https://github.com/folke/tokyonight.nvim" },
 	{ src = "https://github.com/catppuccin/nvim" },
-	-- { src = "https://github.com/navarasu/onedark.nvim" },
+	{ src = "https://github.com/kdheepak/monochrome.nvim" },
 	{ src = "https://github.com/olimorris/onedarkpro.nvim" },
 	{ src = "https://github.com/Mofiqul/vscode.nvim" },
 	{ src = "https://github.com/EdenEast/nightfox.nvim" },
@@ -76,11 +85,11 @@ vim.keymap.set("n", "<leader>ph", ":Pick help<CR>")
 vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR> ")
 vim.keymap.set("n", "<leader>fm", vim.lsp.buf.format)
 
-require "neo-tree".setup()
+require "neo-tree".setup({})
 require "vague".setup({ transparent = true })
 require "gruvbox".setup()
 require "bufferline".setup()
-require("scope").setup({})
+require "scope".setup({})
 require "mini.pick".setup()
 require "mason".setup()
 require "blink.cmp".setup({
@@ -124,6 +133,7 @@ require "copilot".setup({
 		},
 	},
 	panel = { enabled = false },
+	copilot_model = "gpt-5-mini",
 	filetypes = {
 		markdown = true,
 		tex = true,
@@ -132,16 +142,24 @@ require "copilot".setup({
 })
 
 
-vim.lsp.enable({ "lua_ls", "clangd", "markdown_oxide", "matlab_ls", "ltex_plus" })
+vim.lsp.enable({ "lua_ls", "clangd", "markdown_oxide", "matlab_ls", "zls", "pyright", "tinymist" })
+vim.diagnostic.config({
+		virtual_text = true, -- text on the right (true to enable)
+		-- virtual_lines = { -- additional virtual line below the one with the diagnostic
+		-- 	current_line = false -- show only when cursor is on the current diagnostic line
+		-- }
+}) 
+
 -- theme
 require("onedarkpro").setup({
 	plugins = {
 		all = false
 	}
 })
+-- vim.cmd([[colorscheme gruber-darker]])
+-- vim.cmd([[colorscheme vaporwave]])
 vim.cmd([[colorscheme gruvbox]])
-vim.cmd([[colorscheme gruber-darker]])
-vim.cmd([[colorscheme vaporwave]])
+-- vim.cmd([[colorscheme monochrome]])
 -- vim.cmd([[hi statusline guibg=NONE]])
 
 
