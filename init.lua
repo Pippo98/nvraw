@@ -2,8 +2,10 @@ vim.opt.number = true
 vim.opt.winborder = "rounded"
 vim.opt.swapfile = false
 vim.opt.wrap = true
-vim.opt.tabstop = 2
+vim.opt.tabstop = 4
 vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.opt.softtabstop = 2
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.relativenumber = true
@@ -12,7 +14,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.path = "**"
 vim.opt.mouse = ""
 vim.g.mapleader = " "
--- smartcase 
+-- smartcase
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
@@ -21,13 +23,13 @@ vim.opt.spell = true
 vim.opt.spelllang = "en"
 
 -- lsp
-vim.opt.completeopt = { "menuone", "noselect", "popup" } 
+vim.opt.completeopt = { "menuone", "noselect", "popup" }
 vim.keymap.set("i", "<C-space>", vim.lsp.completion.get, { desc = "trigger autocompletion" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "go to declaration" })
 
-vim.keymap.set({"n", "v"}, "j", "gj")
-vim.keymap.set({"n", "v"}, "k", "gk")
+vim.keymap.set({ "n", "v" }, "j", "gj")
+vim.keymap.set({ "n", "v" }, "k", "gk")
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("i", "<C-h>", "<Left>")
@@ -44,19 +46,21 @@ vim.keymap.set("n", "zs", "zt<C-y>")
 vim.keymap.set("n", "<leader>d", ":bp|bd#<CR>")
 
 vim.pack.add({
-  { src = "https://github.com/vague2k/vague.nvim" },
-  { src = "https://github.com/echasnovski/mini.pick" },
-  { src = "https://github.com/Saghen/blink.cmp" },
+	{ src = "https://github.com/vague2k/vague.nvim" },
+	{ src = "https://github.com/echasnovski/mini.pick" },
+	{ src = "https://github.com/Saghen/blink.cmp" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
 	-- bufferline
-  { src = "https://github.com/akinsho/bufferline.nvim" },
+	{ src = "https://github.com/akinsho/bufferline.nvim" },
 	{ src = "https://github.com/tiagovla/scope.nvim" },
 	-- neo-tree
 	{ src = "https://github.com/nvim-neo-tree/neo-tree.nvim" },
-  -- dependencies
-  { src = "https://github.com/nvim-lua/plenary.nvim" },
-  { src = "https://github.com/MunifTanjim/nui.nvim" },
-  { src = "https://github.com/nvim-tree/nvim-web-devicons" },
+	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
+
+	-- dependencies
+	{ src = "https://github.com/nvim-lua/plenary.nvim" },
+	{ src = "https://github.com/MunifTanjim/nui.nvim" },
+	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 	-- copilot
 	{ src = "https://github.com/zbirenbaum/copilot.lua" },
 	-- themes
@@ -93,6 +97,7 @@ require "scope".setup({})
 require "mini.pick".setup()
 require "mason".setup()
 require "blink.cmp".setup({
+	fuzzy = { implementation = "lua" },
 	completion = {
 		menu = {
 			auto_show = true
@@ -142,13 +147,24 @@ require "copilot".setup({
 })
 
 
-vim.lsp.enable({ "lua_ls", "clangd", "markdown_oxide", "matlab_ls", "zls", "pyright", "tinymist" })
+vim.lsp.enable({
+	"superhtml",
+	"lua_ls",
+	"clangd",
+	"markdown_oxide",
+	"matlab_ls",
+	"zls",
+	"pyright",
+	"tinymist",
+	"ts_ls",
+	"cmake",
+})
 vim.diagnostic.config({
-		virtual_text = true, -- text on the right (true to enable)
-		-- virtual_lines = { -- additional virtual line below the one with the diagnostic
-		-- 	current_line = false -- show only when cursor is on the current diagnostic line
-		-- }
-}) 
+	virtual_text = true, -- text on the right (true to enable)
+	-- virtual_lines = { -- additional virtual line below the one with the diagnostic
+	-- 	current_line = false -- show only when cursor is on the current diagnostic line
+	-- }
+})
 
 -- theme
 require("onedarkpro").setup({
@@ -163,9 +179,9 @@ vim.cmd([[colorscheme gruvbox]])
 -- vim.cmd([[hi statusline guibg=NONE]])
 
 
--- Get the list of available color schemes, then 
+-- Get the list of available color schemes, then
 -- define a keymap (leader + cs) to set the next color scheme in the list
--- and loop back to the start when reaching the end of the list. 
+-- and loop back to the start when reaching the end of the list.
 -- The list should be get from the vim.g.colors_name variable.
 local themes = vim.fn.getcompletion("", "color")
 local current_theme_index = 1
@@ -188,4 +204,34 @@ vim.keymap.set("n", "<leader>cS", function()
 	print("Color scheme: " .. themes[current_theme_index])
 end, { desc = "Cycle color schemes backwards" })
 
+local telescope = require("telescope.builtin")
+local telescope_state = require("telescope.state")
+local last_search = nil
+function search_with_cache()
+	if last_search == nil then
+		telescope.live_grep()
 
+		local cached_pickers = telescope_state.get_global_key "cached_pickers" or {}
+		last_search = cached_pickers[1]
+	else
+		telescope.resume({ picker = last_search })
+	end
+end
+
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', search_with_cache)
+-- vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
+require("telescope").setup {
+	defaults = {
+		file_ignore_patterns = { "node_modules", ".git/", ".cache/", "build", "debug", "release" },
+		-- keep last search query
+		history = {
+			path = vim.fn.stdpath("data") .. "/telescope_history.sqlite3",
+			limit = 100,
+		},
+	}
+}
