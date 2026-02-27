@@ -1,26 +1,24 @@
 vim = vim or {}
 
-vim.opt.number = true
+vim.opt.number = true -- line number
+vim.opt.relativenumber = true -- relative line numbering
 vim.opt.winborder = "rounded"
-vim.opt.swapfile = false
-vim.opt.wrap = true
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
-vim.opt.softtabstop = 2
+vim.opt.swapfile = false -- avoid creating .swp files
+vim.opt.wrap = true -- auto wrap
+vim.opt.tabstop = 4 -- 4 spaces for every \t
+vim.opt.shiftwidth = 2 -- indentation level (in spaces)
+vim.opt.expandtab = true -- when inserting <tab> it uses spaces
+vim.opt.softtabstop = 2 -- cursor moves of n spaces when pressing tab
 vim.opt.autoindent = true
-vim.opt.smartindent = true
-vim.opt.relativenumber = true
-vim.opt.cursorline = false
-vim.opt.signcolumn = "yes"
+vim.opt.smartindent = true -- helps indenting correctly in programs
+vim.opt.cursorline = false --  hilight cursor line
+vim.opt.signcolumn = "yes" -- additional leftmost column for +- (git) or I/W/E for lsp
 vim.opt.path = "**"
-vim.opt.mouse = ""
-vim.g.mapleader = " "
--- smartcase
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
+vim.opt.mouse = "" -- disable mouse
+vim.g.mapleader = " " -- set leader to space
+vim.opt.ignorecase = true -- default ignore case
+vim.opt.smartcase = true -- when searching if one letter is uppercase then the search will be case sensitive
 
--- default: :setlocal spell spelllang=en_us
 vim.opt.spell = true
 vim.opt.spelllang = "en"
 
@@ -61,10 +59,8 @@ vim.pack.add({
   { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter-context" },
-
   -- tex
   { src = "https://github.com/lervag/vimtex" },
-
   -- dependencies
   { src = "https://github.com/nvim-lua/plenary.nvim" },
   { src = "https://github.com/MunifTanjim/nui.nvim" },
@@ -95,6 +91,7 @@ vim.pack.add({
   { src = "https://github.com/blazkowolf/gruber-darker.nvim" },
 })
 
+-- File picker (bottom left)
 vim.keymap.set("n", "<leader>pf", ":Pick files<CR>")
 vim.keymap.set("n", "<leader>ph", ":Pick help<CR>")
 vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR> ")
@@ -149,6 +146,8 @@ require "blink.cmp".setup({
     ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
   }
 })
+
+-- Copilot setup
 require "copilot".setup({
   suggestion = {
     enabled = false,
@@ -162,7 +161,9 @@ require "copilot".setup({
       dismiss = "<C-]>",
     },
   },
-  panel = { enabled = false },
+  panel = {
+    enabled = false
+  },
   filetypes = {
     markdown = true,
     tex = true,
@@ -170,13 +171,27 @@ require "copilot".setup({
   },
 })
 
+-- vimtex
 vim.g.vimtex_view_method = "skim"
 vim.g.vimtex_view_skim_activate = 1
 vim.g.vimtex_view_skim_sync = 1
 vim.g.vimtex_view_skim_reading_bar = 1
 
 require('nvim-treesitter').setup({
-  ensure_installed = { "c", "cpp", "lua", "python", "matlab", "markdown", "markdown_inline", "typescript", "javascript", "json", "html", "css", "cmake" },
+  ensure_installed = { "c",
+    "cpp",
+    "lua",
+    "python",
+    "matlab",
+    "markdown",
+    "markdown_inline",
+    "typescript",
+    "javascript",
+    "json",
+    "html",
+    "css",
+    "cmake"
+  },
   sync_install = false,
   auto_install = true,
   highlight = {
@@ -203,6 +218,7 @@ vim.diagnostic.config({
   -- }
 })
 
+-- TODO: avoid setting every time the default one, instead use the last used one
 -- theme
 require("onedarkpro").setup({
   plugins = {
@@ -211,12 +227,13 @@ require("onedarkpro").setup({
 })
 -- vim.cmd([[colorscheme gruber-darker]])
 -- vim.cmd([[colorscheme vaporwave]])
-vim.cmd([[colorscheme gruvbox]])
+-- vim.cmd([[colorscheme gruvbox]])
 vim.cmd([[colorscheme ayu-mirage]])
 -- vim.cmd([[colorscheme monochrome]])
 -- vim.cmd([[hi statusline guibg=NONE]])
 
 
+-- ======= CYCLE ON COLORSCHEMES with cs and cS =======
 -- Get the list of available color schemes, then
 -- define a keymap (leader + cs) to set the next color scheme in the list
 -- and loop back to the start when reaching the end of the list.
@@ -242,9 +259,11 @@ vim.keymap.set("n", "<leader>cS", function()
   print("Color scheme: " .. themes[current_theme_index])
 end, { desc = "Cycle color schemes backwards" })
 
+
 local telescope = require("telescope.builtin")
 local telescope_state = require("telescope.state")
 local last_search = nil
+-- keep previous searched state
 function search_with_cache()
   if last_search == nil then
     telescope.live_grep()
@@ -256,6 +275,7 @@ function search_with_cache()
   end
 end
 
+-- Telescope keymaps
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>fg', search_with_cache)
@@ -265,7 +285,13 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help ta
 
 require("telescope").setup {
   defaults = {
-    file_ignore_patterns = { "node_modules", ".git/", ".cache/", "build", "debug", "release" },
+    file_ignore_patterns = { "node_modules",
+      ".git/",
+      ".cache/",
+      "build",
+      "debug",
+      "release"
+    },
     -- keep last search query
     history = {
       path = vim.fn.stdpath("data") .. "/telescope_history.sqlite3",
