@@ -1,3 +1,5 @@
+vim = vim or {}
+
 vim.opt.number = true
 vim.opt.winborder = "rounded"
 vim.opt.swapfile = false
@@ -40,48 +42,57 @@ vim.keymap.set("n", "<leader>o", ":write<CR> :source<CR>")
 vim.keymap.set("n", "<leader>w", ":write<CR>")
 vim.keymap.set("n", "<leader>q", ":quit<CR>")
 
-vim.keymap.set("n", "zs", "zt<C-y>")
+vim.keymap.set("n", "zs", "zt2<C-y>")
 
 --- Buffers
 vim.keymap.set("n", "<leader>d", ":bp|bd#<CR>")
 
 vim.pack.add({
-	{ src = "https://github.com/vague2k/vague.nvim" },
-	{ src = "https://github.com/echasnovski/mini.pick" },
-	{ src = "https://github.com/Saghen/blink.cmp" },
-	{ src = "https://github.com/mason-org/mason.nvim" },
-	-- bufferline
-	{ src = "https://github.com/akinsho/bufferline.nvim" },
-	{ src = "https://github.com/tiagovla/scope.nvim" },
-	-- neo-tree
-	{ src = "https://github.com/nvim-neo-tree/neo-tree.nvim" },
-	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
+  { src = "https://github.com/echasnovski/mini.pick" },
+  { src = "https://github.com/Saghen/blink.cmp" },
+  { src = "https://github.com/mason-org/mason.nvim" },
+  -- bufferline
+  { src = "https://github.com/akinsho/bufferline.nvim" },
+  { src = "https://github.com/tiagovla/scope.nvim" },
+  -- neo-tree
+  { src = "https://github.com/nvim-neo-tree/neo-tree.nvim" },
+  { src = "https://github.com/nvim-telescope/telescope.nvim" },
+  -- markdown
+  { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter-context" },
 
-	-- dependencies
-	{ src = "https://github.com/nvim-lua/plenary.nvim" },
-	{ src = "https://github.com/MunifTanjim/nui.nvim" },
-	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
-	-- copilot
-	{ src = "https://github.com/zbirenbaum/copilot.lua" },
-	-- themes
-	{ src = "https://github.com/ellisonleao/gruvbox.nvim" },
-	{ src = "https://github.com/folke/tokyonight.nvim" },
-	{ src = "https://github.com/catppuccin/nvim" },
-	{ src = "https://github.com/kdheepak/monochrome.nvim" },
-	{ src = "https://github.com/olimorris/onedarkpro.nvim" },
-	{ src = "https://github.com/Mofiqul/vscode.nvim" },
-	{ src = "https://github.com/EdenEast/nightfox.nvim" },
-	{ src = "https://github.com/sainnhe/gruvbox-material" },
-	{ src = "https://github.com/projekt0n/github-nvim-theme" },
-	{ src = "https://github.com/nyoom-engineering/oxocarbon.nvim" },
-	{ src = "https://github.com/zootedb0t/citruszest.nvim" },
-	{ src = "https://github.com/Mofiqul/adwaita.nvim" },
-	{ src = "https://github.com/sainnhe/everforest" },
-	{ src = "https://github.com/marko-cerovac/material.nvim" },
-	{ src = "https://github.com/olimorris/onedarkpro.nvim" },
-	{ src = "https://github.com/Mofiqul/dracula.nvim" },
-	{ src = "https://github.com/shaunsingh/nord.nvim" },
-	{ src = "https://github.com/blazkowolf/gruber-darker.nvim" },
+  -- tex
+  { src = "https://github.com/lervag/vimtex" },
+
+  -- dependencies
+  { src = "https://github.com/nvim-lua/plenary.nvim" },
+  { src = "https://github.com/MunifTanjim/nui.nvim" },
+  { src = "https://github.com/nvim-tree/nvim-web-devicons" },
+  -- copilot
+  { src = "https://github.com/zbirenbaum/copilot.lua" },
+  -- themes
+  { src = "https://github.com/vague2k/vague.nvim" },
+  { src = "https://github.com/ellisonleao/gruvbox.nvim" },
+  { src = "https://github.com/folke/tokyonight.nvim" },
+  { src = "https://github.com/catppuccin/nvim" },
+  { src = "https://github.com/kdheepak/monochrome.nvim" },
+  { src = "https://github.com/olimorris/onedarkpro.nvim" },
+  { src = "https://github.com/Mofiqul/vscode.nvim" },
+  { src = "https://github.com/EdenEast/nightfox.nvim" },
+  { src = "https://github.com/Shatur/neovim-ayu" },
+  { src = "https://github.com/ku1ik/vim-monokai" },
+  { src = "https://github.com/sainnhe/gruvbox-material" },
+  { src = "https://github.com/projekt0n/github-nvim-theme" },
+  { src = "https://github.com/nyoom-engineering/oxocarbon.nvim" },
+  { src = "https://github.com/zootedb0t/citruszest.nvim" },
+  { src = "https://github.com/Mofiqul/adwaita.nvim" },
+  { src = "https://github.com/sainnhe/everforest" },
+  { src = "https://github.com/marko-cerovac/material.nvim" },
+  { src = "https://github.com/olimorris/onedarkpro.nvim" },
+  { src = "https://github.com/Mofiqul/dracula.nvim" },
+  { src = "https://github.com/shaunsingh/nord.nvim" },
+  { src = "https://github.com/blazkowolf/gruber-darker.nvim" },
 })
 
 vim.keymap.set("n", "<leader>pf", ":Pick files<CR>")
@@ -97,84 +108,111 @@ require "scope".setup({})
 require "mini.pick".setup()
 require "mason".setup()
 require "blink.cmp".setup({
-	fuzzy = { implementation = "lua" },
-	completion = {
-		menu = {
-			auto_show = true
-		},
-		list = {
-			selection = {
-				preselect = false,
-				auto_insert = true
-			}
-		}
-	},
-	keymap = {
-		['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-		['<C-e>'] = { 'hide' },
-		['<CR>'] = { 'accept', 'fallback' },
+  fuzzy = { implementation = "lua" },
+  completion = {
+    menu = {
+      -- Don't automatically show the completion menu
+      auto_show = true,
 
-		['<Tab>'] = { 'select_next', 'fallback' },
-		['<S-Tab>'] = { 'select_prev', 'fallback' },
-		['<Left>'] = { 'snippet_forward', 'fallback' },
+      -- nvim-cmp style menu
+      draw = {
+        columns = {
+          { "label",     "label_description", gap = 1 },
+          { "kind_icon", "kind" }
+        },
+      }
+    },
+    -- Show documentation when selecting a completion item
+    documentation = { auto_show = true, auto_show_delay_ms = 500 },
 
-		['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
-		['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+    -- Display a preview of the selected item on the current line
+    ghost_text = { enabled = true },
+    list = {
+      selection = {
+        preselect = false,
+        auto_insert = true
+      }
+    }
+  },
+  keymap = {
+    ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+    ['<C-e>'] = { 'hide' },
+    ['<CR>'] = { 'accept', 'fallback' },
 
-		['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
-	}
+    ['<Tab>'] = { 'select_next', 'fallback' },
+    ['<S-Tab>'] = { 'select_prev', 'fallback' },
+    ['<Left>'] = { 'snippet_forward', 'fallback' },
+
+    ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+    ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+
+    ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
+  }
 })
 require "copilot".setup({
-	suggestion = {
-		enabled = true,
-		auto_trigger = true,
-		hide_during_completion = vim.g.ai_cmp,
-		keymap = {
-			next = "<M-]>",
-			prev = "<M-[>",
-			accept = "<M-l>",
-			accept_word = "<M-,>",
-			dismiss = "<C-]>",
-		},
-	},
-	panel = { enabled = false },
-	copilot_model = "gpt-5-mini",
-	filetypes = {
-		markdown = true,
-		tex = true,
-		help = true,
-	},
+  suggestion = {
+    enabled = false,
+    auto_trigger = false,
+    hide_during_completion = true,
+    keymap = {
+      next = "<M-]>",
+      prev = "<M-[>",
+      accept = "<M-l>",
+      accept_word = "<M-,>",
+      dismiss = "<C-]>",
+    },
+  },
+  panel = { enabled = false },
+  filetypes = {
+    markdown = true,
+    tex = true,
+    help = true,
+  },
 })
 
+vim.g.vimtex_view_method = "skim"
+vim.g.vimtex_view_skim_activate = 1
+vim.g.vimtex_view_skim_sync = 1
+vim.g.vimtex_view_skim_reading_bar = 1
 
+require('nvim-treesitter').setup({
+  ensure_installed = { "c", "cpp", "lua", "python", "matlab", "markdown", "markdown_inline", "typescript", "javascript", "json", "html", "css", "cmake" },
+  sync_install = false,
+  auto_install = true,
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+})
 vim.lsp.enable({
-	"superhtml",
-	"lua_ls",
-	"clangd",
-	"markdown_oxide",
-	"matlab_ls",
-	"zls",
-	"pyright",
-	"tinymist",
-	"ts_ls",
-	"cmake",
+  "superhtml",
+  "lua_ls",
+  "clangd",
+  "markdown_oxide",
+  "matlab_ls",
+  "zls",
+  "pyright",
+  "tinymist",
+  "ts_ls",
+  "cmake",
 })
 vim.diagnostic.config({
-	virtual_text = true, -- text on the right (true to enable)
-	-- virtual_lines = { -- additional virtual line below the one with the diagnostic
-	-- 	current_line = false -- show only when cursor is on the current diagnostic line
-	-- }
+  virtual_text = true, -- text on the right (true to enable)
+  -- virtual_lines = { -- additional virtual line below the one with the diagnostic
+  -- 	current_line = false -- show only when cursor is on the current diagnostic line
+  -- }
 })
 
 -- theme
 require("onedarkpro").setup({
-	plugins = {
-		all = false
-	}
+  plugins = {
+    all = false
+  }
 })
 -- vim.cmd([[colorscheme gruber-darker]])
 -- vim.cmd([[colorscheme vaporwave]])
 vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[colorscheme ayu-mirage]])
 -- vim.cmd([[colorscheme monochrome]])
 -- vim.cmd([[hi statusline guibg=NONE]])
 
@@ -186,36 +224,36 @@ vim.cmd([[colorscheme gruvbox]])
 local themes = vim.fn.getcompletion("", "color")
 local current_theme_index = 1
 vim.keymap.set("n", "<leader>cs", function()
-	current_theme_index = current_theme_index + 1
-	if current_theme_index > #themes then
-		current_theme_index = 1
-	end
-	vim.cmd("colorscheme " .. themes[current_theme_index])
-	-- print the name of the current color scheme
-	print("Color scheme: " .. themes[current_theme_index])
+  current_theme_index = current_theme_index + 1
+  if current_theme_index > #themes then
+    current_theme_index = 1
+  end
+  vim.cmd("colorscheme " .. themes[current_theme_index])
+  -- print the name of the current color scheme
+  print("Color scheme: " .. themes[current_theme_index])
 end, { desc = "Cycle color schemes" })
 -- use leader + cS to go backwards
 vim.keymap.set("n", "<leader>cS", function()
-	current_theme_index = current_theme_index - 1
-	if current_theme_index < 1 then
-		current_theme_index = #themes
-	end
-	vim.cmd("colorscheme " .. themes[current_theme_index])
-	print("Color scheme: " .. themes[current_theme_index])
+  current_theme_index = current_theme_index - 1
+  if current_theme_index < 1 then
+    current_theme_index = #themes
+  end
+  vim.cmd("colorscheme " .. themes[current_theme_index])
+  print("Color scheme: " .. themes[current_theme_index])
 end, { desc = "Cycle color schemes backwards" })
 
 local telescope = require("telescope.builtin")
 local telescope_state = require("telescope.state")
 local last_search = nil
 function search_with_cache()
-	if last_search == nil then
-		telescope.live_grep()
+  if last_search == nil then
+    telescope.live_grep()
 
-		local cached_pickers = telescope_state.get_global_key "cached_pickers" or {}
-		last_search = cached_pickers[1]
-	else
-		telescope.resume({ picker = last_search })
-	end
+    local cached_pickers = telescope_state.get_global_key "cached_pickers" or {}
+    last_search = cached_pickers[1]
+  else
+    telescope.resume({ picker = last_search })
+  end
 end
 
 local builtin = require('telescope.builtin')
@@ -226,12 +264,28 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' 
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
 require("telescope").setup {
-	defaults = {
-		file_ignore_patterns = { "node_modules", ".git/", ".cache/", "build", "debug", "release" },
-		-- keep last search query
-		history = {
-			path = vim.fn.stdpath("data") .. "/telescope_history.sqlite3",
-			limit = 100,
-		},
-	}
+  defaults = {
+    file_ignore_patterns = { "node_modules", ".git/", ".cache/", "build", "debug", "release" },
+    -- keep last search query
+    history = {
+      path = vim.fn.stdpath("data") .. "/telescope_history.sqlite3",
+      limit = 100,
+    },
+  }
+}
+
+require('treesitter-context').setup {
+  enable = true,            -- Enable this plugin (Can be enabled/disabled later via commands)
+  multiwindow = false,      -- Enable multiwindow support.
+  max_lines = 0,            -- How many lines the window should span. Values <= 0 mean no limit.
+  min_window_height = 0,    -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+  line_numbers = true,
+  multiline_threshold = 20, -- Maximum number of lines to show for a single context
+  trim_scope = 'outer',     -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+  mode = 'cursor',          -- Line used to calculate context. Choices: 'cursor', 'topline'
+  -- Separator between context and content. Should be a single character string, like '-'.
+  -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+  separator = nil,
+  zindex = 20,     -- The Z-index of the context window
+  on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 }
