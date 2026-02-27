@@ -1,3 +1,7 @@
+# Nvim prerequisite
+I am using nvim nightly builds (aka prerelease). This config uses some nvim features that are available only in new versions.
+[link to github releases](https://github.com/neovim/neovim/releases/nightly)
+
 # Setup
 clone directly in .config folder
 ```bash
