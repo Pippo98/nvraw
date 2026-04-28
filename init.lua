@@ -1,23 +1,21 @@
-vim = vim or {}
-
-vim.opt.number = true -- line number
+vim.opt.number = true         -- line number
 vim.opt.relativenumber = true -- relative line numbering
 vim.opt.winborder = "rounded"
-vim.opt.swapfile = false -- avoid creating .swp files
-vim.opt.wrap = true -- auto wrap
-vim.opt.tabstop = 4 -- 4 spaces for every \t
-vim.opt.shiftwidth = 2 -- indentation level (in spaces)
-vim.opt.expandtab = true -- when inserting <tab> it uses spaces
-vim.opt.softtabstop = 2 -- cursor moves of n spaces when pressing tab
+vim.opt.swapfile = false      -- avoid creating .swp files
+vim.opt.wrap = true           -- auto wrap
+vim.opt.tabstop = 4           -- 4 spaces for every \t
+vim.opt.shiftwidth = 2        -- indentation level (in spaces)
+vim.opt.expandtab = true      -- when inserting <tab> it uses spaces
+vim.opt.softtabstop = 2       -- cursor moves of n spaces when pressing tab
 vim.opt.autoindent = true
-vim.opt.smartindent = true -- helps indenting correctly in programs
-vim.opt.cursorline = false --  hilight cursor line
-vim.opt.signcolumn = "yes" -- additional leftmost column for +- (git) or I/W/E for lsp
+vim.opt.smartindent = true    -- helps indenting correctly in programs
+vim.opt.cursorline = false    --  highlight cursor line
+vim.opt.signcolumn = "yes"    -- additional leftmost column for +- (git) or I/W/E for lsp
 vim.opt.path = "**"
-vim.opt.mouse = "" -- disable mouse
-vim.g.mapleader = " " -- set leader to space
-vim.opt.ignorecase = true -- default ignore case
-vim.opt.smartcase = true -- when searching if one letter is uppercase then the search will be case sensitive
+vim.opt.mouse = ""            -- disable mouse
+vim.g.mapleader = " "         -- set leader to space
+vim.opt.ignorecase = true     -- default ignore case
+vim.opt.smartcase = true      -- when searching if one letter is uppercase then the search will be case sensitive
 
 vim.opt.spell = true
 vim.opt.spelllang = "en"
@@ -47,6 +45,7 @@ vim.keymap.set("n", "<leader>d", ":bp|bd#<CR>")
 
 vim.pack.add({
   { src = "https://github.com/echasnovski/mini.pick" },
+  { src = "https://github.com/Saghen/blink.lib" },
   { src = "https://github.com/Saghen/blink.cmp" },
   { src = "https://github.com/mason-org/mason.nvim" },
   -- bufferline
@@ -211,6 +210,20 @@ vim.lsp.enable({
   "ts_ls",
   "cmake",
 })
+vim.lsp.config("lua_ls", {
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim" },
+      },
+      workspace = {
+        library = {
+          vim.env.VIMRUNTIME,
+        },
+      },
+    },
+  },
+})
 vim.diagnostic.config({
   virtual_text = true, -- text on the right (true to enable)
   -- virtual_lines = { -- additional virtual line below the one with the diagnostic
@@ -301,7 +314,7 @@ require("telescope").setup {
 }
 
 require('treesitter-context').setup {
-  enable = true,            -- Enable this plugin (Can be enabled/disabled later via commands)
+  enable = false,           -- Enable this plugin (Can be enabled/disabled later via commands)
   multiwindow = false,      -- Enable multiwindow support.
   max_lines = 0,            -- How many lines the window should span. Values <= 0 mean no limit.
   min_window_height = 0,    -- Minimum editor window height to enable context. Values <= 0 mean no limit.
